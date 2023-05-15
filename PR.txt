@@ -1,0 +1,78 @@
+Exercicio 1
+
+1.1
+mongoimport -d scienceJobs -c contracts --file emprego-cientifico.json --jsonArray
+ o dataset foi importado com sucesso:
+"2023-05-15T09:21:32.137+0100    17943 document(s) imported successfully. 0 document(s) failed to import."
+
+1.2
+
+    Quantos contratos estão na base de dados;
+        db.contracts.countDocuments()
+        17943
+    Quantos contratos foram realizados pela Universidade do Minho?
+        db.contracts.countDocuments({ NomeInstituicao: "Universidade do Minho" })
+        166
+
+    Qual a lista das áreas das pessoas contratadas (ordenada alfabeticamente e sem repetições)? (AreaCNAEF)
+        db.contracts.distinct("AreaCNAEF").sort()
+
+    Qual a distribuição por ano dos contratos? (quantos contratos em cada ano)
+        db.contracts.aggregate([
+            {
+              $group: {
+                _id: {
+                  $year: {
+                    $dateFromString: {
+                      dateString: { $concat: [{ $substr: ["$DataInicioContrato", 6, 4] }, "-01-01"] },
+                      format: "%Y-%m-%d"
+                    }
+                  }
+                },
+                count: { $sum: 1 }
+              }
+            },
+            {
+              $sort: {
+                _id: 1
+              }
+            }
+        ])
+
+
+    Qual a distribuição dos contratos por instituição?
+            db.contracts.aggregate([
+                {
+                  $group: {
+                    _id: "$NomeInstituicao",
+                    count: { $sum: 1 }
+                  }
+                },
+                {
+                  $sort: {
+                    _id: 1
+                  }
+                }
+            ])
+
+1.3
+    
+    GET /contracts: devolve uma lista com todos os contratos; 
+        a funcionar
+    GET /contracts/:id: devolve o contrato com identificador id;
+        a funcionar
+    GET /contracts?year=YYYY: devolve a lista dos contratos realizados durante o ano YYYY;
+        ñão está a funcionar
+    GET /contracts?inst=AAA: devolve a lista dos contratos realizados pela instituição contratante AAA;
+        a funcionar
+    GET /contracts/courses: devolve a lista dos cursos dos contratados (sem repetições);
+        a funcionar
+    GET /contracts/institutions: devolve a lista das instituições contratantes (sem repetições);
+        a funcionar
+    POST /contracts: acrescenta um contrato novo à BD;
+        a funcionar
+    DELETE /contracts/:id: elimina da BD o contrato com o identificador id.
+        a funcionar
+    
+    Todos testados com o Postman
+
