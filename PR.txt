@@ -58,21 +58,28 @@ mongoimport -d scienceJobs -c contracts --file emprego-cientifico.json --jsonArr
 1.3
     
     GET /contracts: devolve uma lista com todos os contratos; 
-        a funcionar
+        Realizado
     GET /contracts/:id: devolve o contrato com identificador id;
-        a funcionar
+        Realizado
     GET /contracts?year=YYYY: devolve a lista dos contratos realizados durante o ano YYYY;
-        ñão está a funcionar
+        ñão está Realizado
     GET /contracts?inst=AAA: devolve a lista dos contratos realizados pela instituição contratante AAA;
-        a funcionar
+        Realizado
     GET /contracts/courses: devolve a lista dos cursos dos contratados (sem repetições);
-        a funcionar
+        Realizado
     GET /contracts/institutions: devolve a lista das instituições contratantes (sem repetições);
-        a funcionar
+        Realizado
     POST /contracts: acrescenta um contrato novo à BD;
-        a funcionar
+        Realizado
     DELETE /contracts/:id: elimina da BD o contrato com o identificador id.
-        a funcionar
+        Realizado
     
     Todos testados com o Postman
 
+Exercicio 2
+1 
+  Realizado
+2 
+  Realizado
+3 
+  Não está realizado
